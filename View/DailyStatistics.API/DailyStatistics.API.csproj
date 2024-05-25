@@ -18,4 +18,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DailyStatistics.Application\DailyStatistics.Application.csproj" />
+    <ProjectReference Include="..\..\DailyStatistics.Persistence\DailyStatistics.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
