@@ -4,6 +4,13 @@ namespace DailyStatistics.Persistence.Repositories.EF;
 
 public class UserRepository : IUserRepository
 {
+	private readonly ApplicationDbContext _context;
+
+	public UserRepository(ApplicationDbContext context)
+	{
+		_context = context;
+	}
+
 	public Task<User> AddUserAsync(User user)
 	{
 		throw new NotImplementedException();
