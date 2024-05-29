@@ -1,38 +1,48 @@
 ﻿using DailyStatistics.Persistence.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DailyStatistics.Persistence.Repositories.EF;
 
 public class UserRepository : IUserRepository
 {
-	private readonly ApplicationDbContext _context;
+	private readonly UserManager<User> _userManager;
 
-	public UserRepository(ApplicationDbContext context)
+	public UserRepository(UserManager<User> userManager)
 	{
-		_context = context;
+		_userManager = userManager;
 	}
 
-	public Task<User> AddUserAsync(User user)
+	public async Task<User?> AddUserAsync(User user, string password)
 	{
-		throw new NotImplementedException();
+		await _userManager.CreateAsync(user, password);
+		return await _userManager.FindByIdAsync(user.Id);
 	}
 
-	public Task<bool> DeleteUserAsync(string userId)
+	public async Task<bool> DeleteUserAsync(string userId)
 	{
-		throw new NotImplementedException();
+		var foundUser = await _userManager.FindByIdAsync(userId);
+		if (foundUser is null)
+			return false;
+
+		var result = await _userManager.DeleteAsync(foundUser);
+		return result.Succeeded;
 	}
 
-	public Task<User> GetUserByEmailAsync(string email)
+	public Task<User?> GetUserByEmailAsync(string email)
 	{
-		throw new NotImplementedException();
+		return _userManager.FindByEmailAsync(email);
 	}
 
-	public Task<User> GetUserByIdAsync(string userId)
+	public Task<User?> GetUserByIdAsync(string userId)
 	{
-		throw new NotImplementedException();
+		return _userManager.FindByIdAsync(userId);
 	}
 
-	public Task<User> UpdateUserAsync(User user)
+	public async Task<User?> UpdateUserAsync(User user)
 	{
-		throw new NotImplementedException();
+		var foundUser = await _userManager.FindByIdAsync(user.Id);
+		await _userManager.UpdateAsync(user);
+
+		return foundUser;
 	}
 }

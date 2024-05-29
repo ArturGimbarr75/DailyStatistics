@@ -1,16 +1,17 @@
-﻿using DailyStatistics.Persistence.Models;
+﻿using DailyStatistics.Persistence.EntityConfigurations;
+using DailyStatistics.Persistence.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DailyStatistics.Persistence;
 
-public sealed class ApplicationDbContext : DbContext
+public sealed class ApplicationDbContext : IdentityDbContext<User>
 {
 	public DbSet<DayRecord> DayRecords { get; set; } = default!;
 	public DbSet<TrackingActivityGroup> ActivityGroups { get; set; } = default!;
 	public DbSet<TrackingActivityGroupMember> ActivityGroupMembers { get; set; } = default!;
 	public DbSet<TrackingActivityKind> ActivityKinds { get; set; } = default!;
 	public DbSet<TrackingActivityRecord> ActivityRecords { get; set; }
-	public DbSet<User> Users { get; set; } = default!;
 
 	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
 	{
@@ -20,7 +21,7 @@ public sealed class ApplicationDbContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
-		modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(TrackingActivityKindConfiguration).Assembly);
 	}
 }
 
