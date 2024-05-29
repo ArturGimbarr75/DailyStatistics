@@ -1,14 +1,17 @@
 ﻿using DailyStatistics.Persistence.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DailyStatistics.Persistence.Repositories.EF;
 
 public class UserRepository : IUserRepository
 {
 	private readonly ApplicationDbContext _context;
+	private readonly UserManager<User> _userManager;
 
 	public UserRepository(ApplicationDbContext context)
 	{
 		_context = context;
+
 	}
 
 	public Task<User> AddUserAsync(User user)
