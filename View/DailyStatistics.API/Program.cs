@@ -1,5 +1,9 @@
+using DailyStatistics.Application.Services;
+using DailyStatistics.Application.Services.Interfaces;
 using DailyStatistics.Persistence;
 using DailyStatistics.Persistence.Models;
+using DailyStatistics.Persistence.Repositories;
+using DailyStatistics.Persistence.Repositories.EF;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +41,10 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
