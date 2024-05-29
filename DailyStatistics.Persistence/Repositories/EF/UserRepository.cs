@@ -12,10 +12,10 @@ public class UserRepository : IUserRepository
 		_userManager = userManager;
 	}
 
-	public async Task<User?> AddUserAsync(User user, string password)
+	public async Task<(User?, IdentityResult)> AddUserAsync(User user, string password)
 	{
-		await _userManager.CreateAsync(user, password);
-		return await _userManager.FindByIdAsync(user.Id);
+		var identityResult = await _userManager.CreateAsync(user, password);
+		return (await _userManager.FindByIdAsync(user.Id), identityResult);
 	}
 
 	public async Task<bool> DeleteUserAsync(string userId)
