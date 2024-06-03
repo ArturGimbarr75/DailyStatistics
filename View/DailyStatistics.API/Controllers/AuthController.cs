@@ -32,4 +32,21 @@ public class AuthController : Controller
 
 		return BadRequest(message);
 	}
+
+	[HttpPost("login")]
+	public async Task<ActionResult<UserDto>> Login([FromBody] UserLoginData loginData)
+	{
+		var result = await _userService.LoginAsync(loginData);
+
+		if (result)
+			return Ok(result.Value);
+
+		string message = result.Error switch
+		{
+			LoginErrors.InvalidCredentials => "Invalid credentials",
+			_ => "An error occurred",
+		};
+
+		return BadRequest(message);
+	}
 }
