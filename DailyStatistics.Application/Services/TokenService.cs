@@ -107,7 +107,7 @@ public sealed class TokenService : ITokenService
 		return loginTokens;
 	}
 
-	private string GetUserIdFromToken(string accessToken)
+	public string GetUserIdFromToken(string accessToken)
 	{
 		JwtSecurityTokenHandler tokenHandler = new();
 		JwtSecurityToken token = tokenHandler.ReadJwtToken(accessToken);
