@@ -38,6 +38,11 @@ public class UserRepository : IUserRepository
 		return _userManager.FindByIdAsync(userId);
 	}
 
+	public Task<User?> GetUserByUserNameAsync(string userName)
+	{
+		return _userManager.FindByNameAsync(userName);
+	}
+
 	public async Task<User?> UpdateUserAsync(User user)
 	{
 		var foundUser = await _userManager.FindByIdAsync(user.Id);
