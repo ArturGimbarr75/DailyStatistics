@@ -1,6 +1,6 @@
 ﻿namespace DailyStatistics.Application.DTO;
 
-public class UserDto
+public sealed class UserDto
 {
 	public string Id { get; set; } = default!;
 	public string Email { get; set; } = default!;
