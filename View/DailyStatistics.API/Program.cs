@@ -43,8 +43,11 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserManagerFacade, UserManagerFacade>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
