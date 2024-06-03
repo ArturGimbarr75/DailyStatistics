@@ -13,9 +13,9 @@ public sealed class UserService : IUserService
 {
 	private readonly IUserRepository _userRepository;
 	private readonly ITokenService _tokenService;
-	private readonly UserManager<User> _userManager;
+	private readonly IUserManagerFacade _userManager;
 
-	public UserService(IUserRepository userRepository, UserManager<User> userManager, ITokenService tokenService)
+	public UserService(IUserRepository userRepository, IUserManagerFacade userManager, ITokenService tokenService)
 	{
 		_userRepository = userRepository;
 		_userManager = userManager;
@@ -44,13 +44,13 @@ public sealed class UserService : IUserService
 		if (user is null)
 			return LoginErrors.InvalidCredentials;
 
-		var verificationResult = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash!, loginData.Password);
+		var verificationResult = _userManager.VerifyHashedPassword(user, user.PasswordHash!, loginData.Password);
 		if (verificationResult == PasswordVerificationResult.Failed)
 			return LoginErrors.InvalidCredentials;
 
 		if (verificationResult == PasswordVerificationResult.SuccessRehashNeeded)
 		{
-			user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, loginData.Password);
+			user.PasswordHash = _userManager.HashPassword(user, loginData.Password);
 			await _userRepository.UpdateUserAsync(user);
 		}
 
