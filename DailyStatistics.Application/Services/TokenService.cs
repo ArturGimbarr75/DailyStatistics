@@ -104,15 +104,17 @@ public sealed class TokenService : ITokenService
 			RefreshTokenExpirationTimeStamp = (ulong)(newRefreshToken.Expires - DateTime.UnixEpoch).TotalSeconds
 		};
 
+		await _refreshTokenRepository.DeleteAsync(storedRefreshToken);
+
 		return loginTokens;
 	}
 
-	public string GetUserIdFromToken(string accessToken)
+	public string? GetUserIdFromToken(string accessToken)
 	{
 		JwtSecurityTokenHandler tokenHandler = new();
 		JwtSecurityToken token = tokenHandler.ReadJwtToken(accessToken);
 		// TODO: Validate issuer, audience
-		return token.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+		return token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier || claim.Type == "nameid")?.Value;
 	}
 
 	public async Task<LoginTokens?> GenerateTokens(User user)

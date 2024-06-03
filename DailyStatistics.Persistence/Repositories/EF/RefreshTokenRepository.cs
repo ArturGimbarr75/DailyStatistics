@@ -22,7 +22,7 @@ public sealed class RefreshTokenRepository : IRefreshTokenRepository
 
 	public async Task<bool> DeleteAsync(RefreshToken refreshToken)
 	{
-		RefreshToken? foundToken = await _context.RefreshTokens.FindAsync(refreshToken.UserId, refreshToken.Token);
+		RefreshToken? foundToken = await _context.RefreshTokens.Where(t => t.UserId == refreshToken.UserId && t.Token == refreshToken.Token).FirstOrDefaultAsync();
 
 		if (foundToken is null)
 			return false;
@@ -43,5 +43,12 @@ public sealed class RefreshTokenRepository : IRefreshTokenRepository
 		// TODO: Check for memory leaks
 		_context.RefreshTokens.RemoveRange(_context.RefreshTokens.Where(t => t.Expires < DateTime.UtcNow));
 		await _context.SaveChangesAsync();
+	}
+
+	public async Task<bool> DeleteUserTokensAsync(string userId)
+	{
+		_context.RefreshTokens.RemoveRange(_context.RefreshTokens.Where(t => t.UserId == userId));
+		await _context.SaveChangesAsync();
+		return true;
 	}
 }

@@ -9,5 +9,5 @@ public interface ITokenService
 	Task<RefreshToken> GenerateRefreshToken(User user);
 	Task<LoginTokens?> RefreshToken(string accessToken, string refreshToken);
 	Task<LoginTokens?> GenerateTokens(User user);
-	string GetUserIdFromToken(string accessToken);
+	string? GetUserIdFromToken(string accessToken);
 }

@@ -12,14 +12,19 @@ namespace DailyStatistics.Application.Services;
 public sealed class UserService : IUserService
 {
 	private readonly IUserRepository _userRepository;
+	private readonly IRefreshTokenRepository _refreshTokenRepository;
 	private readonly ITokenService _tokenService;
 	private readonly IUserManagerFacade _userManager;
 
-	public UserService(IUserRepository userRepository, IUserManagerFacade userManager, ITokenService tokenService)
+	public UserService( IUserRepository userRepository,
+						IUserManagerFacade userManager,
+						ITokenService tokenService,
+						IRefreshTokenRepository refreshTokenRepository)
 	{
 		_userRepository = userRepository;
 		_userManager = userManager;
 		_tokenService = tokenService;
+		_refreshTokenRepository = refreshTokenRepository;
 	}
 
 	public async Task<InfoResult<UserDto?, RegistrationErrors>> CreateAsync(UserRegistrationData registrationData)
@@ -67,5 +72,36 @@ public sealed class UserService : IUserService
 		};
 
 		return userTokensPair;
+	}
+
+	public async Task<InfoResult<LoginTokens?, RefreshAccessTokenErrors>> RefreshAccessToken(string accessToken, string refreshToken)
+	{
+		LoginTokens? loginTokens = await _tokenService.RefreshToken(accessToken, refreshToken);
+		string userId = _tokenService.GetUserIdFromToken(accessToken);
+		User? user = await _userRepository.GetUserByIdAsync(userId);
+
+		if (user is null)
+			return RefreshAccessTokenErrors.UserNotFound;
+
+		if (loginTokens is null)
+			return RefreshAccessTokenErrors.InvalidToken;
+
+		return loginTokens;
+	}
+
+	public async Task<Result<LogoutErrors>> Logout(string accessToken)
+	{
+		string userId = _tokenService.GetUserIdFromToken(accessToken);
+		User? user = await _userRepository.GetUserByIdAsync(userId);
+
+		if (user is null)
+			return LogoutErrors.InvalidToken;
+
+		bool tokensDeleted = await _refreshTokenRepository.DeleteUserTokensAsync(user.Id);
+
+		if (!tokensDeleted)
+			return LogoutErrors.Other;
+
+		return new Result<LogoutErrors>() { Error = null };
 	}
 }
