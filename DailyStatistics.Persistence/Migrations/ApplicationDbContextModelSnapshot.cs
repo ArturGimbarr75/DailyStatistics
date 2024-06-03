@@ -74,7 +74,7 @@ namespace DailyStatistics.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshToken");
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("DailyStatistics.Persistence.Models.TrackingActivityGroup", b =>
