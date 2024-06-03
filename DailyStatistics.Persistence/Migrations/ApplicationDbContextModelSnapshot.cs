@@ -48,6 +48,35 @@ namespace DailyStatistics.Persistence.Migrations
                     b.ToTable("DayRecords");
                 });
 
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("DailyStatistics.Persistence.Models.TrackingActivityGroup", b =>
                 {
                     b.Property<Guid>("Id")
@@ -370,6 +399,17 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.RefreshToken", b =>
+                {
+                    b.HasOne("DailyStatistics.Persistence.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DailyStatistics.Persistence.Models.TrackingActivityGroup", b =>
                 {
                     b.HasOne("DailyStatistics.Persistence.Models.User", "User")
@@ -501,6 +541,8 @@ namespace DailyStatistics.Persistence.Migrations
             modelBuilder.Entity("DailyStatistics.Persistence.Models.User", b =>
                 {
                     b.Navigation("DayRecords");
+
+                    b.Navigation("RefreshTokens");
 
                     b.Navigation("TrackingActivityGroups");
 
