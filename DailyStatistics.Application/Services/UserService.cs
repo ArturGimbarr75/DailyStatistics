@@ -36,7 +36,7 @@ public sealed class UserService : IUserService
 		return RegistationHelper.MapUserToDto(createdUser!);
 	}
 
-	public async Task<InfoResult<(LoginTokens, UserDto)?, LoginErrors>> LoginAsync(UserLoginData loginData)
+	public async Task<InfoResult<UserTokensPair?, LoginErrors>> LoginAsync(UserLoginData loginData)
 	{
 		User? user = await _userRepository.GetUserByEmailAsync(loginData.UserNameOrEmail);
 		user ??= await _userRepository.GetUserByUserNameAsync(loginData.UserNameOrEmail);
@@ -60,6 +60,12 @@ public sealed class UserService : IUserService
 		if (loginTokens is null)
 			return LoginErrors.Other;
 
-		return (loginTokens, userDto);
+		UserTokensPair userTokensPair = new()
+		{
+			User = userDto,
+			Tokens = loginTokens
+		};
+
+		return userTokensPair;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using DailyStatistics.Application.DTO;
+using DailyStatistics.Application.Infrastructure;
 using DailyStatistics.Application.Services.Errors.UserService;
 using DailyStatistics.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -34,12 +35,14 @@ public class AuthController : Controller
 	}
 
 	[HttpPost("login")]
-	public async Task<ActionResult<UserDto>> Login([FromBody] UserLoginData loginData)
+	public async Task<ActionResult<UserTokensPair?>> Login([FromBody] UserLoginData loginData)
 	{
 		var result = await _userService.LoginAsync(loginData);
 
 		if (result)
+		{
 			return Ok(result.Value);
+		}
 
 		string message = result.Error switch
 		{
