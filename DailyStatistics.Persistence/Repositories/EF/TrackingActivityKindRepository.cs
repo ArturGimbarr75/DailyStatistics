@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DailyStatistics.Persistence.Repositories.EF;
 
-public class TrackingActivityKindRepository : ITrackingActivityKindRepository
+public sealed class TrackingActivityKindRepository : ITrackingActivityKindRepository
 {
 	private readonly ApplicationDbContext _context;
 
