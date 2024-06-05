@@ -44,10 +44,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<ITrackingActivityKindRepository, TrackingActivityKindRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserManagerFacade, UserManagerFacade>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IActivityKindService, ActivityKindService>();
 
 var app = builder.Build();
 
