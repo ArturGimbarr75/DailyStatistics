@@ -2,5 +2,7 @@
 
 public enum GetActivityKindErrors
 {
-	InvalidUserId,
+	InvalidJwt,
+	ActivityKindNotFound,
+	UserDoesNotHaveActivityKindWithThisId
 }

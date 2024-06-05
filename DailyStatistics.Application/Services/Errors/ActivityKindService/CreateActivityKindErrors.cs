@@ -4,5 +4,6 @@ public enum CreateActivityKindErrors
 {
 	InvalidName,
 	InvalidUserId,
-	UserAlreadyHasActivityKindWithThisName
+	UserAlreadyHasActivityKindWithThisName,
+	InternalError
 }
