@@ -57,7 +57,7 @@ public class ActivityKindService : IActivityKindService
 		if (!deleted)
 			return DeleteActivityKindErrors.InternalError;
 
-		return DeleteActivityKindErrors.Success;
+		return Result.Ok<DeleteActivityKindErrors>();
 	}
 
 	public async Task<Result<ActivityKindDto, GetActivityKindErrors>> GetActivityKind(string jwt, Guid id)
