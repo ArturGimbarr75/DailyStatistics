@@ -1,5 +1,4 @@
-﻿
-using DailyStatistics.Persistence.Models;
+﻿using DailyStatistics.Persistence.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DailyStatistics.Persistence.Repositories.EF;
