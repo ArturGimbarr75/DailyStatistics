@@ -25,4 +25,15 @@ internal static class ActivityKindHelper
 			Description = activityKind.Description
 		};
 	}
+
+	public static TrackingActivityKind MapActivityKindDtoToActivityKind(ActivityKindDto activityKindDto)
+	{
+		return new()
+		{
+			Id = activityKindDto.Id,
+			Name = activityKindDto.Name,
+			UserId = activityKindDto.UserId,
+			Description = activityKindDto.Description
+		};
+	}
 }
