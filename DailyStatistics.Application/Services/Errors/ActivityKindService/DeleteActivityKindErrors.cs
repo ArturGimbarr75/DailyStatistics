@@ -2,7 +2,6 @@
 
 public enum DeleteActivityKindErrors
 {
-	InvalidJwt,
 	InvalidId,
 	UserDoesNotHaveActivityKindWithThisId,
 	InternalError

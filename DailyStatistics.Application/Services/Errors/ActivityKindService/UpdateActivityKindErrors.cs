@@ -2,7 +2,6 @@
 
 public enum UpdateActivityKindErrors
 {
-	InvalidJwt,
 	InvalidName,
 	UserDoesNotHaveActivityKindWithThisId,
 	UserAlreadyHasActivityKindWithThisName,

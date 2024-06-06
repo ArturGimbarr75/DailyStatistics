@@ -6,9 +6,9 @@ namespace DailyStatistics.Application.Services.Interfaces;
 
 public interface IActivityKindService
 {
-	Task<Result<ActivityKindDto, CreateActivityKindErrors>> CreateActivityKind(string jwt, ActivityKindCreate activityKind);
-	Task<Result<ActivityKindDto, UpdateActivityKindErrors>> UpdateActivityKind(string jwt, ActivityKindDto activityKind);
-	Task<Result<DeleteActivityKindErrors>> DeleteActivityKind(string jwt, Guid id);
-	Task<Result<ActivityKindDto, GetActivityKindErrors>> GetActivityKind(string jwt, Guid id);
-	Task<Result<IEnumerable<ActivityKindDto>, GetActivityKindErrors>> GetAllActivityKinds(string jwt);
+	Task<Result<ActivityKindDto, CreateActivityKindErrors>> CreateActivityKind(string userId, ActivityKindCreate activityKind);
+	Task<Result<ActivityKindDto, UpdateActivityKindErrors>> UpdateActivityKind(string juserIdwt, ActivityKindDto activityKind);
+	Task<Result<DeleteActivityKindErrors>> DeleteActivityKind(string userId, Guid id);
+	Task<Result<ActivityKindDto, GetActivityKindErrors>> GetActivityKind(string userId, Guid id);
+	Task<Result<IEnumerable<ActivityKindDto>, GetActivityKindErrors>> GetAllActivityKinds(string userId);
 }

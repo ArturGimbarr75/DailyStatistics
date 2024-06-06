@@ -11,21 +11,14 @@ namespace DailyStatistics.Application.Services;
 public class ActivityKindService : IActivityKindService
 {
 	private readonly ITrackingActivityKindRepository _activityKindRepository;
-	private readonly ITokenService _tokensService;
 
-	public ActivityKindService(ITrackingActivityKindRepository activityKindRepository, ITokenService tokensService)
+	public ActivityKindService(ITrackingActivityKindRepository activityKindRepository)
 	{
 		_activityKindRepository = activityKindRepository;
-		_tokensService = tokensService;
 	}
 
-	public async Task<Result<ActivityKindDto, CreateActivityKindErrors>> CreateActivityKind(string jwt, ActivityKindCreate activityKind)
+	public async Task<Result<ActivityKindDto, CreateActivityKindErrors>> CreateActivityKind(string userId, ActivityKindCreate activityKind)
 	{
-		string? userId = _tokensService.GetUserIdFromToken(jwt);
-
-		if (userId is null)
-			return CreateActivityKindErrors.InvalidUserId;
-
 		if (string.IsNullOrWhiteSpace(activityKind.Name))
 			return CreateActivityKindErrors.InvalidName;
 
@@ -42,13 +35,8 @@ public class ActivityKindService : IActivityKindService
 		return activityKindDto;
 	}
 
-	public async Task<Result<DeleteActivityKindErrors>> DeleteActivityKind(string jwt, Guid id)
+	public async Task<Result<DeleteActivityKindErrors>> DeleteActivityKind(string userId, Guid id)
 	{
-		string? userId = _tokensService.GetUserIdFromToken(jwt);
-
-		if (userId is null)
-			return DeleteActivityKindErrors.InvalidJwt;
-
 		if (!await _activityKindRepository.UserOwnsTrackingActivityKind(userId, id))
 			return DeleteActivityKindErrors.UserDoesNotHaveActivityKindWithThisId;
 
@@ -60,13 +48,8 @@ public class ActivityKindService : IActivityKindService
 		return Result.Ok<DeleteActivityKindErrors>();
 	}
 
-	public async Task<Result<ActivityKindDto, GetActivityKindErrors>> GetActivityKind(string jwt, Guid id)
+	public async Task<Result<ActivityKindDto, GetActivityKindErrors>> GetActivityKind(string userId, Guid id)
 	{
-		string? userId = _tokensService.GetUserIdFromToken(jwt);
-
-		if (userId is null)
-			return GetActivityKindErrors.InvalidJwt;
-
 		TrackingActivityKind? activityKind = await _activityKindRepository.GetAsync(id);
 
 		if (activityKind is null)
@@ -80,13 +63,8 @@ public class ActivityKindService : IActivityKindService
 		return activityKindDto;
 	}
 
-	public async Task<Result<IEnumerable<ActivityKindDto>, GetActivityKindErrors>> GetAllActivityKinds(string jwt)
+	public async Task<Result<IEnumerable<ActivityKindDto>, GetActivityKindErrors>> GetAllActivityKinds(string userId)
 	{
-		string? userId = _tokensService.GetUserIdFromToken(jwt);
-
-		if (userId is null)
-			return GetActivityKindErrors.InvalidJwt;
-
 		IEnumerable<TrackingActivityKind> activityKinds = await _activityKindRepository.GetAllOfUserAsync(userId);
 
 		if (!activityKinds.Any())
@@ -96,13 +74,8 @@ public class ActivityKindService : IActivityKindService
 		return new() { Value = activityKindDtos };
 	}
 
-	public async Task<Result<ActivityKindDto, UpdateActivityKindErrors>> UpdateActivityKind(string jwt, ActivityKindDto activityKind)
+	public async Task<Result<ActivityKindDto, UpdateActivityKindErrors>> UpdateActivityKind(string userId, ActivityKindDto activityKind)
 	{
-		string? userId = _tokensService.GetUserIdFromToken(jwt);
-
-		if (userId is null)
-			return UpdateActivityKindErrors.InvalidJwt;
-
 		if (await _activityKindRepository.UserOwnsTrackingActivityKind(userId, activityKind.Id))
 			return UpdateActivityKindErrors.UserDoesNotHaveActivityKindWithThisId;
 
