@@ -48,6 +48,12 @@ public class DayRecordRepository : IDayRecordRepository
 			.FirstOrDefaultAsync(dr => dr.Date == date && dr.UserId == userId);
 	}
 
+	public Task<DayRecord?> GetDayByIdAsync(Guid id, string userId)
+	{
+		return _context.DayRecords
+			.FirstOrDefaultAsync(dr => dr.Id == id && dr.UserId == userId);
+	}
+
 	public async Task<IEnumerable<DayRecord>> GetDaysAsync(DateOnly from, DateOnly to, string userId)
 	{
 		return await _context.DayRecords
