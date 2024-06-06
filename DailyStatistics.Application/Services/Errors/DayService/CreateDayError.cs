@@ -2,5 +2,6 @@
 
 public enum CreateDayError
 {
-	DayAlreadyExists
+	DayAlreadyExists,
+	DayNotCreated
 }

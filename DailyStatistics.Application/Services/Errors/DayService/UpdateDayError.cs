@@ -2,5 +2,7 @@
 
 public enum UpdateDayError
 {
-	DayNotFound
+	DayNotFound,
+	RecordWithThisDateAlreadyExists,
+	DayNotUpdated
 }
