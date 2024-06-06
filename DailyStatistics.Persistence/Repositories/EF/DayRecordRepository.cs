@@ -33,7 +33,7 @@ public class DayRecordRepository : IDayRecordRepository
 		return true;
 	}
 
-	public async Task<IEnumerable<DateOnly>> GetAllDatesWithRecords(string userId)
+	public async Task<IEnumerable<DateOnly>> GetAllDayRecordDates(string userId)
 	{
 		return await _context.DayRecords
 			.Where(dr => dr.UserId == userId)
