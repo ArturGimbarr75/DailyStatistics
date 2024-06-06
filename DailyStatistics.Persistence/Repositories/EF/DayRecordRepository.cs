@@ -92,4 +92,10 @@ public class DayRecordRepository : IDayRecordRepository
 		return _context.DayRecords
 			.AnyAsync(dr => dr.Date == date && dr.UserId == userId);
 	}
+
+	public Task<bool> UserHasDayRecord(Guid id, string userId)
+	{
+		return _context.DayRecords
+			.AnyAsync(dr => dr.Id == id && dr.UserId == userId);
+	}
 }
