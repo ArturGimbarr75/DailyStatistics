@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DailyStatistics.API.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("[controller]")]
 public sealed class ActivityKindController : RepairControllerBase
 {
 	private readonly IActivityKindService _activityKindService;

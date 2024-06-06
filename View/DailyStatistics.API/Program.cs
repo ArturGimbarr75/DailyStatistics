@@ -10,13 +10,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddSwaggerGen(c =>
 {
 	var securityScheme = new OpenApiSecurityScheme

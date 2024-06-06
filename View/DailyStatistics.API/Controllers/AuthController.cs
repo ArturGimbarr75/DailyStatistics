@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DailyStatistics.API.Controllers;
 
 [ApiController]
-[Route("[controller]/[action]")]
+[Route("[controller]")]
 public class AuthController : Controller
 {
 	private readonly IUserService _userService;
