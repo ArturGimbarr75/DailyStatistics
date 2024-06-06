@@ -35,4 +35,13 @@ internal static class DayRecordHelper
 			UserId = userId
 		};
 	}
+
+	public static FirstAndLastDayPair MapTupleToPair((DateOnly first, DateOnly last) tuple)
+	{
+		return new()
+		{
+			FirstDay = tuple.first,
+			LastDay = tuple.last
+		};
+	}
 }
