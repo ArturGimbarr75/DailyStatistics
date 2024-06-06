@@ -32,7 +32,7 @@ public class ActivityKindService : IActivityKindService
 		if (await _activityKindRepository.ExistsWithNamesAsync(userId, activityKind.Name))
 			return CreateActivityKindErrors.UserAlreadyHasActivityKindWithThisName;
 
-		TrackingActivityKind trackingActivityKind = ActivityKindHelper.MapActivityKindCreateToActivityKind(activityKind);
+		TrackingActivityKind trackingActivityKind = ActivityKindHelper.MapActivityKindCreateToActivityKind(activityKind, userId);
 		TrackingActivityKind? createdActivityKind = await _activityKindRepository.AddAsync(trackingActivityKind);
 
 		if (createdActivityKind is null)

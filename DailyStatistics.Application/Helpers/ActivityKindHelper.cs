@@ -5,12 +5,12 @@ namespace DailyStatistics.Application.Helpers;
 
 internal static class ActivityKindHelper
 {
-	public static TrackingActivityKind MapActivityKindCreateToActivityKind(ActivityKindCreate activityKindCreate)
+	public static TrackingActivityKind MapActivityKindCreateToActivityKind(ActivityKindCreate activityKindCreate, string userId)
 	{
 		return new()
 		{
 			Name = activityKindCreate.Name,
-			UserId = activityKindCreate.UserId,
+			UserId = userId,
 			Description = activityKindCreate.Description
 		};
 	}
