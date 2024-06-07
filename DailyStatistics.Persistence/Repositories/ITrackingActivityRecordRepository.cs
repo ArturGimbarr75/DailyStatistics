@@ -10,4 +10,5 @@ public interface ITrackingActivityRecordRepository
 	Task<TrackingActivityRecord?> UpdateTrackingActivityRecordAsync(TrackingActivityRecord trackingActivityRecord);
 	Task<bool> DeleteTrackingActivityRecordAsync(Guid id);
 	Task<bool> DayHasRecordWithKind(DateOnly date, string userId, Guid kindId);
+	Task<bool> UserOwnsRecord(string userId, Guid recordId);
 }

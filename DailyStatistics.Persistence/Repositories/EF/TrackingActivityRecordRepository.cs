@@ -65,4 +65,9 @@ public class TrackingActivityRecordRepository : ITrackingActivityRecordRepositor
 
 		return foundRecord;
     }
+
+	public Task<bool> UserOwnsRecord(string userId, Guid recordId)
+	{
+		return _context.ActivityRecords.AnyAsync(ar => ar.DayRecord.UserId == userId && ar.Id == recordId);
+	}
 }
