@@ -111,6 +111,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserManagerFacade, UserManagerFacade>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IActivityKindService, ActivityKindService>();
+builder.Services.AddScoped<IActivityRecordService, ActivityRecordService>();
 
 var app = builder.Build();
 
