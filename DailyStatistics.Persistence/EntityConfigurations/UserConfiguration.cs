@@ -27,5 +27,10 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
 			.WithOne(t => t.User)
 			.HasForeignKey(t => t.UserId)
 			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.HasOne(t => t.ProfileImage)
+			.WithOne(t => t.User)
+			.HasForeignKey<ProfileImage>(t => t.UserId)
+			.OnDelete(DeleteBehavior.NoAction);
 	}
 }
