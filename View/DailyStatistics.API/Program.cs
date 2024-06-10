@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen(c =>
 {
 	var securityScheme = new OpenApiSecurityScheme
 	{
-		Name = "JWT Authentication",
+		Name = "Authorization",
 		Description = "Enter JWT Bearer token **_only_**",
 		In = ParameterLocation.Header,
 		Type = SecuritySchemeType.Http,
@@ -53,14 +53,14 @@ builder.Services.AddSwaggerGen(c =>
 	c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 	c.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
 
-	c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, scheme);
+	c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
 });
 
 // TODO: Add validation
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
 	{
-		options.RequireHttpsMetadata = false;
+		options.RequireHttpsMetadata = true;
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateIssuer = false,
@@ -68,6 +68,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			ValidateIssuerSigningKey = true,
 			ValidateLifetime = true,
 			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth:Jwt:Key"]!)),
+			ClockSkew = TimeSpan.Zero
 		};
 	});
 
@@ -103,6 +104,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ITrackingActivityKindRepository, TrackingActivityKindRepository>();
+builder.Services.AddScoped<ITrackingActivityRecordRepository, TrackingActivityRecordRepository>();
+builder.Services.AddScoped<IDayRecordRepository, DayRecordRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserManagerFacade, UserManagerFacade>();
