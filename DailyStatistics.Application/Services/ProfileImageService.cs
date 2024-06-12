@@ -30,7 +30,7 @@ public class ProfileImageService : IProfileImageService
 		_maxWidth = configuration.GetValue<int>("Images:MaxWidth");
 	}
 
-	public async Task<Result<bool, DeleteImageError>> DeleteImage(string userId, Guid imageId)
+	public async Task<Result<DeleteImageError>> DeleteImage(string userId, Guid imageId)
 	{
 		User? user = await _userRepository.GetUserByIdAsync(userId);
 
@@ -53,7 +53,7 @@ public class ProfileImageService : IProfileImageService
 		if (!deleted)
 			return DeleteImageError.ImageNotDeleted;
 
-		return true;
+		return Result.Ok<DeleteImageError>();
 	}
 
 	public async Task<Result<(ImageDto dto, string path)?, GetImageError>> GetImage(string userId, Guid imageId)
