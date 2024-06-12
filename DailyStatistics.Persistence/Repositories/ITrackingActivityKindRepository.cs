@@ -10,5 +10,6 @@ public interface ITrackingActivityKindRepository
 	Task<bool> DeleteAsync(Guid id);
 	Task<IEnumerable<TrackingActivityKind>> GetAllOfUserAsync(string userId);
 	Task<bool> UserOwnsTrackingActivityKind(string userId, Guid trackingActivityKindId);
-	Task<bool> ExistsWithNamesAsync(string userId, string name);
+	Task<bool> ExistsWithNameAsync(string userId, string name);
+	Task<bool> ExistsWithNameButNotWithIdAsync(string userId, string name, Guid id);
 }

@@ -32,9 +32,14 @@ public sealed class TrackingActivityKindRepository : ITrackingActivityKindReposi
 		return true;
 	}
 
-	public Task<bool> ExistsWithNamesAsync(string userId, string name)
+	public Task<bool> ExistsWithNameAsync(string userId, string name)
 	{
 		return Task.FromResult(_context.ActivityKinds.Any(x => x.UserId == userId && x.Name == name));
+	}
+
+	public Task<bool> ExistsWithNameButNotWithIdAsync(string userId, string name, Guid id)
+	{
+		return Task.FromResult(_context.ActivityKinds.Any(x => x.UserId == userId && x.Name == name && x.Id != id));
 	}
 
 	public async Task<IEnumerable<TrackingActivityKind>> GetAllOfUserAsync(string userId)
