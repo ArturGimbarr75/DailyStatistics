@@ -27,7 +27,7 @@ public class ProfileImageRepository : IProfileImageRepository
 		await _context.SaveChangesAsync();
 	}
 
-	public async Task<bool> DeleteProfileImageAsync(string profileImageId)
+	public async Task<bool> DeleteProfileImageAsync(Guid profileImageId)
 	{
 		ProfileImage? profileImage = _context.ProfileImages.Find(profileImageId);
 
@@ -40,7 +40,7 @@ public class ProfileImageRepository : IProfileImageRepository
 		return true;
 	}
 
-	public async Task<ProfileImage?> GetProfileImageByIdAsync(string profileImageId)
+	public async Task<ProfileImage?> GetProfileImageByIdAsync(Guid profileImageId)
 	{
 		return await _context.ProfileImages.FindAsync(profileImageId);
 	}
@@ -58,5 +58,10 @@ public class ProfileImageRepository : IProfileImageRepository
 	public async Task<ProfileImage?> GetSelectedProfileImage(string userId)
 	{
 		return (await _context.Users.FindAsync(userId))?.SelectedProfileImage;
+	}
+
+	public Task<bool> UserOwnsImage(string userId, Guid profileImageId)
+	{
+		return _context.ProfileImages.AnyAsync(t => t.UserId == userId && t.Id == profileImageId);
 	}
 }
