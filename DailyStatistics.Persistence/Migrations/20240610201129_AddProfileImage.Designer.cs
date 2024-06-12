@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DailyStatistics.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240529164923_Init")]
-    partial class Init
+    [Migration("20240610201129_AddProfileImage")]
+    partial class AddProfileImage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,55 @@ namespace DailyStatistics.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("DayRecords");
+                });
+
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.ProfileImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProfileImages");
+                });
+
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("DailyStatistics.Persistence.Models.TrackingActivityGroup", b =>
@@ -205,6 +254,9 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("SelectedProfileImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -225,6 +277,10 @@ namespace DailyStatistics.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("SelectedProfileImageId")
+                        .IsUnique()
+                        .HasFilter("[SelectedProfileImageId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -373,6 +429,25 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.ProfileImage", b =>
+                {
+                    b.HasOne("DailyStatistics.Persistence.Models.User", null)
+                        .WithMany("ProfileImages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.RefreshToken", b =>
+                {
+                    b.HasOne("DailyStatistics.Persistence.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DailyStatistics.Persistence.Models.TrackingActivityGroup", b =>
                 {
                     b.HasOne("DailyStatistics.Persistence.Models.User", "User")
@@ -431,6 +506,16 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Navigation("DayRecord");
 
                     b.Navigation("TrackingActivityKind");
+                });
+
+            modelBuilder.Entity("DailyStatistics.Persistence.Models.User", b =>
+                {
+                    b.HasOne("DailyStatistics.Persistence.Models.ProfileImage", "SelectedProfileImage")
+                        .WithOne()
+                        .HasForeignKey("DailyStatistics.Persistence.Models.User", "SelectedProfileImageId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("SelectedProfileImage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -504,6 +589,10 @@ namespace DailyStatistics.Persistence.Migrations
             modelBuilder.Entity("DailyStatistics.Persistence.Models.User", b =>
                 {
                     b.Navigation("DayRecords");
+
+                    b.Navigation("ProfileImages");
+
+                    b.Navigation("RefreshTokens");
 
                     b.Navigation("TrackingActivityGroups");
 

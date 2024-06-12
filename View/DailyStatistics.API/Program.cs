@@ -106,12 +106,14 @@ builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ITrackingActivityKindRepository, TrackingActivityKindRepository>();
 builder.Services.AddScoped<ITrackingActivityRecordRepository, TrackingActivityRecordRepository>();
 builder.Services.AddScoped<IDayRecordRepository, DayRecordRepository>();
+builder.Services.AddScoped<IProfileImageRepository, ProfileImageRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserManagerFacade, UserManagerFacade>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IActivityKindService, ActivityKindService>();
 builder.Services.AddScoped<IActivityRecordService, ActivityRecordService>();
+builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
 
 var app = builder.Build();
 

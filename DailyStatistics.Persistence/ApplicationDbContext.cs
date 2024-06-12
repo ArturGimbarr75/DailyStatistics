@@ -8,6 +8,7 @@ namespace DailyStatistics.Persistence;
 public sealed class ApplicationDbContext : IdentityDbContext<User>
 {
 	public DbSet<DayRecord> DayRecords { get; set; } = default!;
+	public DbSet<ProfileImage> ProfileImages { get; set; } = default!;
 	public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
 	public DbSet<TrackingActivityGroup> ActivityGroups { get; set; } = default!;
 	public DbSet<TrackingActivityGroupMember> ActivityGroupMembers { get; set; } = default!;
@@ -16,7 +17,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<User>
 
 	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
 	{
-		Database.EnsureCreated();
+		
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)

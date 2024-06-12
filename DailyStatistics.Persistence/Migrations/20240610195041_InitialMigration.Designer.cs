@@ -4,6 +4,7 @@ using DailyStatistics.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DailyStatistics.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240610195041_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,26 +49,6 @@ namespace DailyStatistics.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("DayRecords");
-                });
-
-            modelBuilder.Entity("DailyStatistics.Persistence.Models.ProfileImage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProfileImages");
                 });
 
             modelBuilder.Entity("DailyStatistics.Persistence.Models.RefreshToken", b =>
@@ -251,9 +234,6 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SelectedProfileImageId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -274,10 +254,6 @@ namespace DailyStatistics.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("SelectedProfileImageId")
-                        .IsUnique()
-                        .HasFilter("[SelectedProfileImageId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -426,14 +402,6 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DailyStatistics.Persistence.Models.ProfileImage", b =>
-                {
-                    b.HasOne("DailyStatistics.Persistence.Models.User", null)
-                        .WithMany("ProfileImages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-                });
-
             modelBuilder.Entity("DailyStatistics.Persistence.Models.RefreshToken", b =>
                 {
                     b.HasOne("DailyStatistics.Persistence.Models.User", "User")
@@ -503,16 +471,6 @@ namespace DailyStatistics.Persistence.Migrations
                     b.Navigation("DayRecord");
 
                     b.Navigation("TrackingActivityKind");
-                });
-
-            modelBuilder.Entity("DailyStatistics.Persistence.Models.User", b =>
-                {
-                    b.HasOne("DailyStatistics.Persistence.Models.ProfileImage", "SelectedProfileImage")
-                        .WithOne()
-                        .HasForeignKey("DailyStatistics.Persistence.Models.User", "SelectedProfileImageId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("SelectedProfileImage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -586,8 +544,6 @@ namespace DailyStatistics.Persistence.Migrations
             modelBuilder.Entity("DailyStatistics.Persistence.Models.User", b =>
                 {
                     b.Navigation("DayRecords");
-
-                    b.Navigation("ProfileImages");
 
                     b.Navigation("RefreshTokens");
 
