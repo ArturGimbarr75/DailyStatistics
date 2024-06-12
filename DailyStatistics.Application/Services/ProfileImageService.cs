@@ -6,7 +6,7 @@ using DailyStatistics.Application.Services.Interfaces;
 using DailyStatistics.Persistence.Models;
 using DailyStatistics.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
- 
+
 namespace DailyStatistics.Application.Services;
 
 public class ProfileImageService : IProfileImageService
@@ -30,12 +30,85 @@ public class ProfileImageService : IProfileImageService
 		_maxWidth = configuration.GetValue<int>("Images:MaxWidth");
 	}
 
-	public async Task<InfoResult<ImageDto, UploadImageError>> UploadImage(UploadImageDto uploadImage, string userId)
+	public async Task<Result<bool, DeleteImageError>> DeleteImage(string userId, Guid imageId)
+	{
+		User? user = await _userRepository.GetUserByIdAsync(userId);
+
+		if (user is null)
+			return DeleteImageError.UserNotFound;
+
+		if (!await _profileImageRepository.UserOwnsImage(userId, imageId))
+			return DeleteImageError.ImageNotFound;
+
+		ProfileImage? profileImage = await _profileImageRepository.GetProfileImageByIdAsync(imageId);
+		
+		if (profileImage is null)
+			return DeleteImageError.ImageNotFound;
+
+		if (File.Exists(profileImage.ImagePath))
+			File.Delete(profileImage.ImagePath);
+
+		bool deleted = await _profileImageRepository.DeleteProfileImageAsync(imageId);
+
+		if (!deleted)
+			return DeleteImageError.ImageNotDeleted;
+
+		return true;
+	}
+
+	public async Task<Result<(ImageDto dto, string path)?, GetImageError>> GetImage(string userId, Guid imageId)
+	{
+		User? user = await _userRepository.GetUserByIdAsync(userId);
+
+		if (user is null)
+			return GetImageError.UserNotFound;
+
+		if (!await _profileImageRepository.UserOwnsImage(userId, imageId))
+			return GetImageError.ImageNotFound;
+
+		ProfileImage? profileImage = await _profileImageRepository.GetProfileImageByIdAsync(imageId);
+
+		if (profileImage is null)
+			return GetImageError.ImageNotFound;
+
+		return (ProfileImageHelper.MapProfileImageToDto(profileImage), profileImage.ImagePath);
+	}
+
+	public async Task<Result<IEnumerable<ImageDto>, GetImageError>> GetImages(string userId)
+	{
+		User? user = await _userRepository.GetUserByIdAsync(userId);
+
+		if (user is null)
+			return GetImageError.UserNotFound;
+
+		IEnumerable<ProfileImage> profileImages = await _profileImageRepository.GetProfileImagesByUserIdAsync(userId);
+
+		var images = profileImages.Select(ProfileImageHelper.MapProfileImageToDto);
+		var result = Result<IEnumerable<ImageDto>, GetImageError>.Ok(images);
+		return result;
+	}
+
+	public async Task<Result<ImageDto?, GetImageError>> GetProfileImage(string userId)
+	{
+		User? user = await _userRepository.GetUserByIdAsync(userId);
+
+		if (user is null)
+			return GetImageError.UserNotFound;
+
+		ProfileImage? profileImage = await _profileImageRepository.GetProfileImageByUserIdAsync(userId);
+
+		if (profileImage is null)
+			return Result<ImageDto?, GetImageError>.Ok(null);
+
+		return ProfileImageHelper.MapProfileImageToDto(profileImage);
+	}
+
+	public async Task<InfoResult<ImageDto?, UploadImageError>> UploadImage(UploadImageDto uploadImage, string userId)
 	{
 		if (uploadImage.Image.Length == 0)
 		{
 			string info = "No image uploaded";
-			return InfoResult<ImageDto, UploadImageError>
+			return InfoResult<ImageDto?, UploadImageError>
 				.WithInfo(UploadImageError.InvalidImageSize, info);
 		}
 
@@ -48,13 +121,13 @@ public class ProfileImageService : IProfileImageService
 				$"Allowed extensions: ({string.Join(" ", _allowedExtensions)})"
 			};
 
-			return InfoResult<ImageDto, UploadImageError>
+			return InfoResult<ImageDto?, UploadImageError>
 				.WithInfo(UploadImageError.InvalidImageExtension, info);
 		}
 
         User? user = await _userRepository.GetUserByIdAsync(userId);
 		if (user is null)
-			return InfoResult<ImageDto, UploadImageError>
+			return InfoResult<ImageDto?, UploadImageError>
 				.WithInfo(UploadImageError.UserNotFound, "User not found");
 
         string imageName = $"{Guid.NewGuid()}{extension}";
@@ -78,7 +151,7 @@ public class ProfileImageService : IProfileImageService
 		ProfileImage? addedProfileImage = await _profileImageRepository.AddProfileImageAsync(profileImage);
 
 		if (addedProfileImage is null)
-			return InfoResult<ImageDto, UploadImageError>
+			return InfoResult<ImageDto?, UploadImageError>
 				.WithInfo(UploadImageError.ProfileImageNotAdded, "Profile image not added");
 
 		return ProfileImageHelper.MapProfileImageToDto(addedProfileImage);
