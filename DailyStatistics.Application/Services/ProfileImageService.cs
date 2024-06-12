@@ -103,6 +103,25 @@ public class ProfileImageService : IProfileImageService
 		return ProfileImageHelper.MapProfileImageToDto(profileImage);
 	}
 
+	public async Task<Result<SetProfileImageError>> SetProfileImage(string userId, Guid imageId)
+	{
+		User? user = _userRepository.GetUserByIdAsync(userId).Result;
+
+		if (user is null)
+			return SetProfileImageError.UserNotFound;
+
+		if (!await _profileImageRepository.UserOwnsImage(userId, imageId))
+			return SetProfileImageError.ImageNotFound;
+
+		user.SelectedProfileImageId = imageId;
+		User? updatedUser = await _userRepository.UpdateUserAsync(user);
+
+		if (updatedUser is null)
+			return SetProfileImageError.ImageNotSet;
+
+		return Result.Ok<SetProfileImageError>();
+	}
+
 	public async Task<InfoResult<ImageDto?, UploadImageError>> UploadImage(UploadImageDto uploadImage, string userId)
 	{
 		if (uploadImage.Image.Length == 0)
