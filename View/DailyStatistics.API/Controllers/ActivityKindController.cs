@@ -117,7 +117,7 @@ public sealed class ActivityKindController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("update")]
+	[HttpPut("update")]
 	public async Task<ActionResult<ActivityKindDto>> UpdateActivityKind([FromBody] ActivityKindDto request)
 	{
 		string? userId = UserId;
