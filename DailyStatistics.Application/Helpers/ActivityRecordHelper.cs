@@ -26,4 +26,14 @@ internal static class ActivityRecordHelper
 			ActivityKindId = activityRecord.TrackingActivityKindId,
 		};
 	}
+
+	public static TrackingActivityRecord MapActivityRecordCreateToActivityRecord(ActivityRecordCreate activityRecordDto)
+	{
+		return new()
+		{
+			Amount = activityRecordDto.Amount,
+			DayRecordId = activityRecordDto.DayRecordId,
+			TrackingActivityKindId = activityRecordDto.ActivityKindId,
+		};
+	}
 }
