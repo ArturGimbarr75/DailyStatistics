@@ -6,12 +6,71 @@ using DailyStatistics.Persistence.Repositories;
 using DailyStatistics.Persistence.Repositories.EF;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddSwaggerGen(c =>
+{
+	var securityScheme = new OpenApiSecurityScheme
+	{
+		Name = "Authorization",
+		Description = "Enter JWT Bearer token **_only_**",
+		In = ParameterLocation.Header,
+		Type = SecuritySchemeType.Http,
+		Scheme = JwtBearerDefaults.AuthenticationScheme,
+		BearerFormat = "JWT",
+		Reference = new OpenApiReference
+		{
+			Id = JwtBearerDefaults.AuthenticationScheme,
+			Type = ReferenceType.SecurityScheme
+		}
+	};
+
+	var scheme = new OpenApiSecurityScheme
+	{
+		Reference = new OpenApiReference
+		{
+			Type = ReferenceType.SecurityScheme,
+			Id = JwtBearerDefaults.AuthenticationScheme
+		}
+	};
+
+	c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+	{
+		{
+			scheme, new string[] { }
+		}
+	});
+
+	c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+	c.OperationFilter<SecurityRequirementsOperationFilter>(true, JwtBearerDefaults.AuthenticationScheme);
+
+	c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+});
+
+// TODO: Add validation
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+	.AddJwtBearer(options =>
+	{
+		options.RequireHttpsMetadata = true;
+		options.TokenValidationParameters = new TokenValidationParameters
+		{
+			ValidateIssuer = false,
+			ValidateAudience = false,
+			ValidateIssuerSigningKey = true,
+			ValidateLifetime = true,
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Auth:Jwt:Key"]!)),
+			ClockSkew = TimeSpan.Zero
+		};
+	});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -44,10 +103,18 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<ITrackingActivityKindRepository, TrackingActivityKindRepository>();
+builder.Services.AddScoped<ITrackingActivityRecordRepository, TrackingActivityRecordRepository>();
+builder.Services.AddScoped<IDayRecordRepository, DayRecordRepository>();
+builder.Services.AddScoped<IProfileImageRepository, ProfileImageRepository>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserManagerFacade, UserManagerFacade>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IActivityKindService, ActivityKindService>();
+builder.Services.AddScoped<IActivityRecordService, ActivityRecordService>();
+builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
+builder.Services.AddScoped<IDayService, DayService>();
 
 var app = builder.Build();
 
@@ -59,6 +126,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

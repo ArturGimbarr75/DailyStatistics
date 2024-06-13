@@ -42,7 +42,8 @@ public class Result<TError> where TError : struct, Enum
 public static class Result
 {
 	public static Result<TError> Ok<TError>() where TError : struct, Enum
-	{
+	{	
+		// TODO: avoid allocation, make it static
 		return new Result<TError>();
 	}
 }
