@@ -3,7 +3,7 @@ using DailyStatistics.Persistence.Models;
 
 namespace DailyStatistics.Application.Helpers;
 
-internal static class DayRecordHelper
+public static class DayRecordHelper
 {
 	public static DayRecord MapDayDtoToDayRecord(DayDto dayDto, string userId)
 	{

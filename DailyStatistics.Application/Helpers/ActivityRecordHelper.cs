@@ -3,7 +3,7 @@ using DailyStatistics.Persistence.Models;
 
 namespace DailyStatistics.Application.Helpers;
 
-internal static class ActivityRecordHelper
+public static class ActivityRecordHelper
 {
     public static TrackingActivityRecord MapActivityRecordDtoToActivityRecord(ActivityRecordDto activityRecordDto)
 	{

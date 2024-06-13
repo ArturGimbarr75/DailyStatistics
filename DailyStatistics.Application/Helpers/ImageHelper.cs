@@ -3,14 +3,14 @@ using SixLabors.ImageSharp.Processing;
 
 namespace DailyStatistics.Application.Helpers;
 
-internal static class ImageHelper
+public static class ImageHelper
 {
-	internal static bool IsValidImageExtension(string extension, string[] allowedExtensions)
+	public static bool IsValidImageExtension(string extension, string[] allowedExtensions)
 	{
 		return allowedExtensions.Contains(extension);
 	}
 
-	internal static void CreateThumbnail(int lnWidth, int lnHeight, byte[] bytes, string outputFilename)
+	public static void CreateThumbnail(int lnWidth, int lnHeight, byte[] bytes, string outputFilename)
 	{
 		using (Image image = Image.Load(bytes))
 		{
