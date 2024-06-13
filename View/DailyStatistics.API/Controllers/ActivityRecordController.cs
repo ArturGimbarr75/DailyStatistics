@@ -20,7 +20,7 @@ public sealed class ActivityRecordController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpPost("create")]
-	public async Task<ActionResult<ActivityRecordDto>> CreateActivityRecord([FromBody] ActivityRecordDto request)
+	public async Task<ActionResult<ActivityRecordDto>> CreateActivityRecord([FromBody] ActivityRecordCreate request)
 	{
 		string? userId = UserId;
 

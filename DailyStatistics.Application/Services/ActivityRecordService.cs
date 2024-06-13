@@ -23,7 +23,7 @@ public class ActivityRecordService : IActivityRecordService
 		_activityKindRepository = activityKindRepository;
 	}
 
-	public async Task<Result<ActivityRecordDto, AddRecordErrors>> AddActivityRecordAsync(ActivityRecordDto activityRecordDto, string userId)
+	public async Task<Result<ActivityRecordDto, AddRecordErrors>> AddActivityRecordAsync(ActivityRecordCreate activityRecordDto, string userId)
 	{
 		if (activityRecordDto.Amount < 0)
 			return AddRecordErrors.AmountIsNegative;
@@ -42,7 +42,7 @@ public class ActivityRecordService : IActivityRecordService
 		if (!await _activityKindRepository.UserOwnsTrackingActivityKind(userId, activityRecordDto.ActivityKindId))
 			return AddRecordErrors.ActivityKindNotFound;
 
-		TrackingActivityRecord? activityRecord = ActivityRecordHelper.MapActivityRecordDtoToActivityRecord(activityRecordDto);
+		TrackingActivityRecord? activityRecord = ActivityRecordHelper.MapActivityRecordCreateToActivityRecord(activityRecordDto);
 		TrackingActivityRecord? addedRecord = await _activityRecordRepository.AddTrackingActivityRecordAsync(activityRecord);
 
 		if (addedRecord is null)
