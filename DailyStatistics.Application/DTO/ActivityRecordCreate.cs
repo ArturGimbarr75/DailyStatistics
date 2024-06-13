@@ -1,8 +1,7 @@
 ﻿namespace DailyStatistics.Application.DTO;
 
-public sealed class ActivityRecordDto
+public sealed class ActivityRecordCreate
 {
-	public Guid Id { get; set; }
 	public Guid DayRecordId { get; set; }
 	public Guid ActivityKindId { get; set; }
 	public double Amount { get; set; }

@@ -22,7 +22,7 @@ public class ActivityKindService : IActivityKindService
 		if (string.IsNullOrWhiteSpace(activityKind.Name))
 			return CreateActivityKindErrors.InvalidName;
 
-		if (await _activityKindRepository.ExistsWithNamesAsync(userId, activityKind.Name))
+		if (await _activityKindRepository.ExistsWithNameAsync(userId, activityKind.Name))
 			return CreateActivityKindErrors.UserAlreadyHasActivityKindWithThisName;
 
 		TrackingActivityKind trackingActivityKind = ActivityKindHelper.MapActivityKindCreateToActivityKind(activityKind, userId);
@@ -76,13 +76,13 @@ public class ActivityKindService : IActivityKindService
 
 	public async Task<Result<ActivityKindDto, UpdateActivityKindErrors>> UpdateActivityKind(string userId, ActivityKindDto activityKind)
 	{
-		if (await _activityKindRepository.UserOwnsTrackingActivityKind(userId, activityKind.Id))
+		if (!await _activityKindRepository.UserOwnsTrackingActivityKind(userId, activityKind.Id))
 			return UpdateActivityKindErrors.UserDoesNotHaveActivityKindWithThisId;
 
 		if (string.IsNullOrWhiteSpace(activityKind.Name))
 			return UpdateActivityKindErrors.InvalidName;
 
-		if (await _activityKindRepository.ExistsWithNamesAsync(userId, activityKind.Name))
+		if (await _activityKindRepository.ExistsWithNameButNotWithIdAsync(userId, activityKind.Name, activityKind.Id))
 			return UpdateActivityKindErrors.UserAlreadyHasActivityKindWithThisName;
 
 		TrackingActivityKind trackingActivityKind = ActivityKindHelper.MapActivityKindDtoToActivityKind(activityKind);

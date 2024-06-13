@@ -20,7 +20,7 @@ public sealed class ActivityRecordController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpPost("create")]
-	public async Task<ActionResult<ActivityRecordDto>> CreateActivityRecord([FromBody] ActivityRecordDto request)
+	public async Task<ActionResult<ActivityRecordDto>> CreateActivityRecord([FromBody] ActivityRecordCreate request)
 	{
 		string? userId = UserId;
 
@@ -47,7 +47,7 @@ public sealed class ActivityRecordController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("update")]
+	[HttpPut("update")]
 	public async Task<ActionResult<ActivityRecordDto>> UpdateActivityRecord([FromBody] ActivityRecordDto request)
 	{
 		string? userId = UserId;
@@ -76,8 +76,8 @@ public sealed class ActivityRecordController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("delete")]
-	public async Task<IActionResult> DeleteActivityRecord([FromBody] Guid id)
+	[HttpDelete("delete")]
+	public async Task<IActionResult> DeleteActivityRecord([FromQuery] Guid id)
 	{
 		string? userId = UserId;
 
@@ -124,7 +124,7 @@ public sealed class ActivityRecordController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpGet("get-from-day")]
-	public async Task<ActionResult<IEnumerable<ActivityRecordDto>>> GetActivityRecordsFromDay([FromQuery] DateOnly date)
+	public async Task<ActionResult<IEnumerable<ActivityRecordDto>>> GetActivityRecordsFromDay([FromQuery] Date date)
 	{
 		string? userId = UserId;
 

@@ -19,7 +19,8 @@ public class DayService : IDayService
 
 	public async Task<Result<DayDto, CreateDayError>> CreateDayAsync(DayCreate day, string userId)
 	{
-		if (await _dayRecordRepository.UserHasDayRecord(day.Date, userId))
+		DateOnly date = DayRecordHelper.MapDateToDateOnly(day.Date);
+		if (await _dayRecordRepository.UserHasDayRecord(date, userId))
 			return CreateDayError.DayAlreadyExists;
 
 		DayRecord dayRecord = DayRecordHelper.MapDayDtoToDayRecord(day, userId);
@@ -55,8 +56,10 @@ public class DayService : IDayService
 		return new Result<IEnumerable<DateOnly>, GetDaysError>() { Value = dates };
 	}
 
-	public async Task<Result<IEnumerable<DayDto>, GetDaysError>> GetDaysAsync(DateOnly from, DateOnly to, string userId)
+	public async Task<Result<IEnumerable<DayDto>, GetDaysError>> GetDaysAsync(FirstAndLastDayPair range, string userId)
 	{
+		DateOnly from = DayRecordHelper.MapDateToDateOnly(range.FirstDay);
+		DateOnly to = DayRecordHelper.MapDateToDateOnly(range.LastDay);
 		IEnumerable<DayRecord> dayRecords = await _dayRecordRepository.GetDaysAsync(from, to, userId);
 
 		if (!dayRecords.Any())
@@ -83,7 +86,8 @@ public class DayService : IDayService
 		if (dayRecord is null)
 			return UpdateDayError.DayNotFound;
 
-		if (dayRecord.Date != dayDto.Date && await _dayRecordRepository.UserHasDayRecord(dayDto.Date, userId))
+		DateOnly date = DayRecordHelper.MapDateToDateOnly(dayDto.Date);
+		if (dayRecord.Date != date && await _dayRecordRepository.UserHasDayRecord(date, userId))
 			return UpdateDayError.RecordWithThisDateAlreadyExists;
 
 		DayRecord dayToUpdate = DayRecordHelper.MapDayDtoToDayRecord(dayDto, userId);

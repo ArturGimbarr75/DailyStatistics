@@ -23,7 +23,7 @@ public class ActivityRecordService : IActivityRecordService
 		_activityKindRepository = activityKindRepository;
 	}
 
-	public async Task<Result<ActivityRecordDto, AddRecordErrors>> AddActivityRecordAsync(ActivityRecordDto activityRecordDto, string userId)
+	public async Task<Result<ActivityRecordDto, AddRecordErrors>> AddActivityRecordAsync(ActivityRecordCreate activityRecordDto, string userId)
 	{
 		if (activityRecordDto.Amount < 0)
 			return AddRecordErrors.AmountIsNegative;
@@ -42,7 +42,7 @@ public class ActivityRecordService : IActivityRecordService
 		if (!await _activityKindRepository.UserOwnsTrackingActivityKind(userId, activityRecordDto.ActivityKindId))
 			return AddRecordErrors.ActivityKindNotFound;
 
-		TrackingActivityRecord? activityRecord = ActivityRecordHelper.MapActivityRecordDtoToActivityRecord(activityRecordDto);
+		TrackingActivityRecord? activityRecord = ActivityRecordHelper.MapActivityRecordCreateToActivityRecord(activityRecordDto);
 		TrackingActivityRecord? addedRecord = await _activityRecordRepository.AddTrackingActivityRecordAsync(activityRecord);
 
 		if (addedRecord is null)
@@ -79,12 +79,13 @@ public class ActivityRecordService : IActivityRecordService
 		return activityRecordDto;
 	}
 
-	public async Task<Result<IEnumerable<ActivityRecordDto>, GetRecordErrors>> GetActivityRecordsFromDayAsync(DateOnly date, string userId)
+	public async Task<Result<IEnumerable<ActivityRecordDto>, GetRecordErrors>> GetActivityRecordsFromDayAsync(Date date, string userId)
 	{
-		if (!await _dayRecordRepository.UserHasDayRecord(date, userId))
+		DateOnly dateOnly = DayRecordHelper.MapDateToDateOnly(date);
+		if (!await _dayRecordRepository.UserHasDayRecord(dateOnly, userId))
 			return GetRecordErrors.DayRecordNotFound;
 
-		IEnumerable<TrackingActivityRecord> activityRecords = await _activityRecordRepository.GetTrackingActivityRecordsFromDayAsync(date, userId);
+		IEnumerable<TrackingActivityRecord> activityRecords = await _activityRecordRepository.GetTrackingActivityRecordsFromDayAsync(dateOnly, userId);
 
 		if (!activityRecords.Any())
 			return GetRecordErrors.RecordNotFound;

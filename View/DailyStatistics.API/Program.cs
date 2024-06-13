@@ -114,6 +114,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IActivityKindService, ActivityKindService>();
 builder.Services.AddScoped<IActivityRecordService, ActivityRecordService>();
 builder.Services.AddScoped<IProfileImageService, ProfileImageService>();
+builder.Services.AddScoped<IDayService, DayService>();
 
 var app = builder.Build();
 

@@ -44,8 +44,8 @@ public sealed class ActivityKindController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("delete")]
-	public async Task<IActionResult> DeleteActivityKind([FromBody] Guid id)
+	[HttpDelete("delete")]
+	public async Task<IActionResult> DeleteActivityKind([FromQuery] Guid id)
 	{
 		string? userId = UserId;
 
@@ -69,7 +69,7 @@ public sealed class ActivityKindController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpGet("get")]
-	public async Task<ActionResult<IEnumerable<ActivityKindDto>>> GetActivityKind([FromBody] Guid id)
+	public async Task<ActionResult<ActivityKindDto>> GetActivityKind([FromBody] Guid id)
 	{
 		string? userId = UserId;
 
@@ -117,7 +117,7 @@ public sealed class ActivityKindController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("update")]
+	[HttpPut("update")]
 	public async Task<ActionResult<ActivityKindDto>> UpdateActivityKind([FromBody] ActivityKindDto request)
 	{
 		string? userId = UserId;
