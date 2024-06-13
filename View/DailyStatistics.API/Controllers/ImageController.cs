@@ -131,7 +131,10 @@ public sealed class ImageController : RepairControllerBase
 		var result = await _profileImageService.GetProfileImage(userId);
 
 		if (result)
-			return Ok(result.Value);
+			if (result.Value is null)
+				return NoContent();
+			else
+				return Ok(result.Value);
 
 		string error = result.Error switch
 		{
