@@ -48,7 +48,7 @@ public sealed class TokenService : ITokenService
 		SecurityTokenDescriptor tokenDescriptor = new()
 		{
 			Audience = _audience,
-			Expires = DateTime.UtcNow.AddMinutes(_jwtExpiryInterval),
+			Expires = DateTime.UtcNow.AddSeconds(_jwtExpiryInterval),
 			Issuer = _issuer,
 			SigningCredentials = new SigningCredentials(_securityKey, SecurityAlgorithms.HmacSha256),
 			Subject = claimsIdentity
