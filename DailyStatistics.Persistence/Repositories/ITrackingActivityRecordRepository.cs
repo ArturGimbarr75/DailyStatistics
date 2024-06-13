@@ -1,4 +1,4 @@
-﻿using DailyStatistics.Persistence.Models;
+﻿using DailyStatistics.Model;
 
 namespace DailyStatistics.Persistence.Repositories;
 

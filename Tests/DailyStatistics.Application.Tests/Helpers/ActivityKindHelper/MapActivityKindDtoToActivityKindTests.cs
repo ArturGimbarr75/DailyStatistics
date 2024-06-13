@@ -1,5 +1,5 @@
 ﻿using DailyStatistics.DTO.ActivityKind;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using Helper = DailyStatistics.Application.Helpers.ActivityKindHelper;
 
 namespace DailyStatistics.Application.Tests.Helpers.ActivityKindHelper;

@@ -1,4 +1,4 @@
-﻿namespace DailyStatistics.Persistence.Models;
+﻿namespace DailyStatistics.Model;
 
 public sealed class RefreshToken : CreationTrackingEntity
 {

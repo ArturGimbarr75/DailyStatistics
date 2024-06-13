@@ -1,5 +1,5 @@
 ﻿using DailyStatistics.DTO.Record;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 
 namespace DailyStatistics.Application.Helpers;
 

@@ -2,7 +2,7 @@
 using DailyStatistics.Application.Infrastructure;
 using DailyStatistics.Application.Services.Errors.ActivityKindService;
 using DailyStatistics.Application.Services.Interfaces;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using DailyStatistics.Persistence.Repositories;
 using DailyStatistics.DTO.ActivityKind;
 

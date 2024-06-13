@@ -1,4 +1,4 @@
-﻿using DailyStatistics.Persistence.Models;
+﻿using DailyStatistics.Model;
 using Microsoft.AspNetCore.Identity;
 
 namespace DailyStatistics.Persistence.Repositories.EF;

@@ -1,5 +1,5 @@
 ﻿using DailyStatistics.DTO.Auth;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using Helper = DailyStatistics.Application.Helpers.RegistationHelper;
 
 namespace DailyStatistics.Application.Tests.Helpers.RegistationHelper;

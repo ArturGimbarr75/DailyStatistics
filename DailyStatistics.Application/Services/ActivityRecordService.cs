@@ -4,7 +4,7 @@ using DailyStatistics.Application.Services.Errors.ActivityRecordService;
 using DailyStatistics.Application.Services.Interfaces;
 using DailyStatistics.DTO.Record;
 using DailyStatistics.DTO.Day;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using DailyStatistics.Persistence.Repositories;
 
 namespace DailyStatistics.Application.Services;

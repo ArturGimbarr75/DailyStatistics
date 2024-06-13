@@ -1,5 +1,5 @@
 ﻿using DailyStatistics.Application.Services.Interfaces;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using Microsoft.AspNetCore.Identity;
 
 namespace DailyStatistics.Application.Services;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace DailyStatistics.Persistence.Models;
+namespace DailyStatistics.Model;
 
 public sealed class User : IdentityUser
 {
