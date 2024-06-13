@@ -47,7 +47,7 @@ public sealed class ActivityRecordController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("update")]
+	[HttpPut("update")]
 	public async Task<ActionResult<ActivityRecordDto>> UpdateActivityRecord([FromBody] ActivityRecordDto request)
 	{
 		string? userId = UserId;
@@ -76,8 +76,8 @@ public sealed class ActivityRecordController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("delete")]
-	public async Task<IActionResult> DeleteActivityRecord([FromBody] Guid id)
+	[HttpDelete("delete")]
+	public async Task<IActionResult> DeleteActivityRecord([FromQuery] Guid id)
 	{
 		string? userId = UserId;
 
