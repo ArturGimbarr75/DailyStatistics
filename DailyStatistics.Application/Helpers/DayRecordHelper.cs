@@ -1,4 +1,4 @@
-﻿using DailyStatistics.Application.DTO;
+﻿using DailyStatistics.DTO.Day;
 using DailyStatistics.Persistence.Models;
 
 namespace DailyStatistics.Application.Helpers;

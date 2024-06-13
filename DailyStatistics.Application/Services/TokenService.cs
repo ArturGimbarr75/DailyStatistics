@@ -1,5 +1,5 @@
-﻿using DailyStatistics.Application.DTO;
-using DailyStatistics.Application.Services.Interfaces;
+﻿using DailyStatistics.Application.Services.Interfaces;
+using DailyStatistics.DTO.Auth;
 using DailyStatistics.Persistence.Models;
 using DailyStatistics.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;

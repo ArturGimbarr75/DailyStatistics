@@ -1,6 +1,6 @@
-﻿using DailyStatistics.Application.DTO;
-using DailyStatistics.Application.Services.Errors.ActivityKindService;
+﻿using DailyStatistics.Application.Services.Errors.ActivityKindService;
 using DailyStatistics.Application.Services.Interfaces;
+using DailyStatistics.DTO.ActivityKind;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

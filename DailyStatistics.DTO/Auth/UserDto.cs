@@ -1,4 +1,4 @@
-﻿namespace DailyStatistics.Application.DTO;
+﻿namespace DailyStatistics.DTO.Auth;
 
 public sealed class UserDto
 {

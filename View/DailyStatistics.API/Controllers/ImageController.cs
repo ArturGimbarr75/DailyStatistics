@@ -1,6 +1,6 @@
-﻿using DailyStatistics.Application.DTO;
-using DailyStatistics.Application.Services.Errors.ProfileImageService;
+﻿using DailyStatistics.Application.Services.Errors.ProfileImageService;
 using DailyStatistics.Application.Services.Interfaces;
+using DailyStatistics.DTO.Image;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

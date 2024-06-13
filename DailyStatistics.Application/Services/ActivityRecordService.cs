@@ -1,8 +1,9 @@
-﻿using DailyStatistics.Application.DTO;
-using DailyStatistics.Application.Helpers;
+﻿using DailyStatistics.Application.Helpers;
 using DailyStatistics.Application.Infrastructure;
 using DailyStatistics.Application.Services.Errors.ActivityRecordService;
 using DailyStatistics.Application.Services.Interfaces;
+using DailyStatistics.DTO.Record;
+using DailyStatistics.DTO.Day;
 using DailyStatistics.Persistence.Models;
 using DailyStatistics.Persistence.Repositories;
 
