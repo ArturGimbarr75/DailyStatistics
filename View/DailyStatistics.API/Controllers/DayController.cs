@@ -43,7 +43,7 @@ public sealed class DayController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("delete")]
+	[HttpDelete("delete")]
 	public async Task<IActionResult> DeleteDay([FromBody] Guid id)
 	{
 		string? userId = UserId;
@@ -67,7 +67,7 @@ public sealed class DayController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpPost("update")]
+	[HttpPut("update")]
 	public async Task<ActionResult<DayDto>> UpdateDay([FromBody] DayDto request)
 	{
 		string? userId = UserId;
@@ -93,7 +93,7 @@ public sealed class DayController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpGet("get-all")]
-	public async Task<ActionResult<IEnumerable<DayDto>>> GetAllDays()
+	public async Task<ActionResult<IEnumerable<string>>> GetAllDays()
 	{
 		string? userId = UserId;
 
@@ -117,8 +117,8 @@ public sealed class DayController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpGet("get-ir-range")]
-	public async Task<ActionResult<FirstAndLastDayPair>> GetDaysInRange([FromBody] FirstAndLastDayPair range)
+	[HttpGet("get-in-range")]
+	public async Task<ActionResult<IEnumerable<DayDto>>> GetDaysInRange([FromQuery] FirstAndLastDayPair range)
 	{
 		string? userId = UserId;
 
@@ -131,7 +131,7 @@ public sealed class DayController : RepairControllerBase
 			return Ok(result.Value);
 
 		if (result.Error == GetDaysError.NoDaysFound)
-			return NotFound("Days not found");
+			return NoContent();
 
 		string message = result.Error switch
 		{
