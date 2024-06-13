@@ -1,6 +1,6 @@
 ﻿namespace DailyStatistics.Application.DTO;
 
-public class ActivityRecordDto
+public sealed class ActivityRecordDto
 {
 	public Guid Id { get; set; }
 	public Guid DayRecordId { get; set; }
