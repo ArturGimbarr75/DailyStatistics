@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A68C75CA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyStatistics.Application.Tests", "Tests\DailyStatistics.Application.Tests\DailyStatistics.Application.Tests.csproj", "{EAD80803-15A6-4386-B51C-525A9742C6E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyStatistics.DTO", "DailyStatistics.DTO\DailyStatistics.DTO.csproj", "{36243AB0-78DE-4ECC-BBE7-A7EC231F9562}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DailyStatistics.DTO", "DailyStatistics.DTO\DailyStatistics.DTO.csproj", "{36243AB0-78DE-4ECC-BBE7-A7EC231F9562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyStatistics.Model", "DailyStatistics.Model\DailyStatistics.Model.csproj", "{83B70979-CAB4-48EE-BAFE-ED0A448FDEBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{36243AB0-78DE-4ECC-BBE7-A7EC231F9562}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36243AB0-78DE-4ECC-BBE7-A7EC231F9562}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36243AB0-78DE-4ECC-BBE7-A7EC231F9562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B70979-CAB4-48EE-BAFE-ED0A448FDEBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B70979-CAB4-48EE-BAFE-ED0A448FDEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B70979-CAB4-48EE-BAFE-ED0A448FDEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B70979-CAB4-48EE-BAFE-ED0A448FDEBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
