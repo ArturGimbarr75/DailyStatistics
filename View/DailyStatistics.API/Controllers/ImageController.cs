@@ -70,7 +70,7 @@ public sealed class ImageController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpGet("set-profile-image")]
+	[HttpPut("set-profile-image")]
 	public async Task<IActionResult> SetProfileImage([FromQuery] Guid id)
 	{
 		string? userId = UserId;
@@ -95,7 +95,7 @@ public sealed class ImageController : RepairControllerBase
 	}
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	[HttpGet("delete-image")]
+	[HttpDelete("delete-image")]
 	public async Task<IActionResult> DeleteImage([FromQuery] Guid id)
 	{
 		string? userId = UserId;
