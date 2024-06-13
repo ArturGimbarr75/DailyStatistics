@@ -3,7 +3,7 @@ using DailyStatistics.Persistence.Models;
 
 namespace DailyStatistics.Application.Helpers;
 
-internal static class RegistationHelper
+public static class RegistationHelper
 {
 	public static User MapRegistrationData(UserRegistrationData registrationData)
 	{
