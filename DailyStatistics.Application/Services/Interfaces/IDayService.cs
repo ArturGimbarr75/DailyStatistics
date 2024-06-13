@@ -1,6 +1,6 @@
-﻿using DailyStatistics.Application.DTO;
-using DailyStatistics.Application.Infrastructure;
+﻿using DailyStatistics.Application.Infrastructure;
 using DailyStatistics.Application.Services.Errors.DayService;
+using DailyStatistics.DTO.Day;
 
 namespace DailyStatistics.Application.Services.Interfaces;
 

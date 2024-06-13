@@ -1,4 +1,4 @@
-﻿using DailyStatistics.Application.DTO;
+﻿using DailyStatistics.DTO.Auth;
 using DailyStatistics.Persistence.Models;
 
 namespace DailyStatistics.Application.Services.Interfaces;

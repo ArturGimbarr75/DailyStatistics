@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace DailyStatistics.Application.DTO;
+namespace DailyStatistics.DTO.Image;
 
 public sealed class UploadImageDto
 { 

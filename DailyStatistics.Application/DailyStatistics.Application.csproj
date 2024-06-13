@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DailyStatistics.DTO\DailyStatistics.DTO.csproj" />
     <ProjectReference Include="..\DailyStatistics.Persistence\DailyStatistics.Persistence.csproj" />
   </ItemGroup>
 

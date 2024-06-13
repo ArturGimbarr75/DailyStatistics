@@ -1,7 +1,6 @@
-﻿using DailyStatistics.Application.DTO;
-using DailyStatistics.Application.Infrastructure;
-using DailyStatistics.Application.Services.Errors.UserService;
+﻿using DailyStatistics.Application.Services.Errors.UserService;
 using DailyStatistics.Application.Services.Interfaces;
+using DailyStatistics.DTO.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DailyStatistics.API.Controllers;
