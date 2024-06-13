@@ -124,7 +124,7 @@ public sealed class ActivityRecordController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpGet("get-from-day")]
-	public async Task<ActionResult<IEnumerable<ActivityRecordDto>>> GetActivityRecordsFromDay([FromQuery] DateOnly date)
+	public async Task<ActionResult<IEnumerable<ActivityRecordDto>>> GetActivityRecordsFromDay([FromQuery] Date date)
 	{
 		string? userId = UserId;
 

@@ -10,5 +10,5 @@ public interface IActivityRecordService
 	Task<Result<ActivityRecordDto, UpdateRecordErrors>> UpdateActivityRecordAsync(ActivityRecordDto activityRecordDto, string userId);
 	Task<Result<DeleteRecordErrors>> DeleteActivityRecordAsync(Guid id, string userId);
 	Task<Result<ActivityRecordDto, GetRecordErrors>> GetActivityRecordAsync(Guid id, string userId);
-	Task<Result<IEnumerable<ActivityRecordDto>, GetRecordErrors>> GetActivityRecordsFromDayAsync(DateOnly date, string userId);
+	Task<Result<IEnumerable<ActivityRecordDto>, GetRecordErrors>> GetActivityRecordsFromDayAsync(Date date, string userId);
 }

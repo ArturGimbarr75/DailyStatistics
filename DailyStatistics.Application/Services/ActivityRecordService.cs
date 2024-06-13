@@ -79,12 +79,13 @@ public class ActivityRecordService : IActivityRecordService
 		return activityRecordDto;
 	}
 
-	public async Task<Result<IEnumerable<ActivityRecordDto>, GetRecordErrors>> GetActivityRecordsFromDayAsync(DateOnly date, string userId)
+	public async Task<Result<IEnumerable<ActivityRecordDto>, GetRecordErrors>> GetActivityRecordsFromDayAsync(Date date, string userId)
 	{
-		if (!await _dayRecordRepository.UserHasDayRecord(date, userId))
+		DateOnly dateOnly = DayRecordHelper.MapDateToDateOnly(date);
+		if (!await _dayRecordRepository.UserHasDayRecord(dateOnly, userId))
 			return GetRecordErrors.DayRecordNotFound;
 
-		IEnumerable<TrackingActivityRecord> activityRecords = await _activityRecordRepository.GetTrackingActivityRecordsFromDayAsync(date, userId);
+		IEnumerable<TrackingActivityRecord> activityRecords = await _activityRecordRepository.GetTrackingActivityRecordsFromDayAsync(dateOnly, userId);
 
 		if (!activityRecords.Any())
 			return GetRecordErrors.RecordNotFound;
