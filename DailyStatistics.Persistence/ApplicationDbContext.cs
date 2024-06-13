@@ -1,5 +1,5 @@
 ﻿using DailyStatistics.Persistence.EntityConfigurations;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

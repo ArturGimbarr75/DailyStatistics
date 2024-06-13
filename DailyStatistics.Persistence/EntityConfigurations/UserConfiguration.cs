@@ -1,4 +1,4 @@
-﻿using DailyStatistics.Persistence.Models;
+﻿using DailyStatistics.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -3,7 +3,7 @@ using DailyStatistics.Application.Infrastructure;
 using DailyStatistics.Application.Services.Errors.DayService;
 using DailyStatistics.Application.Services.Interfaces;
 using DailyStatistics.DTO.Day;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using DailyStatistics.Persistence.Repositories;
 
 namespace DailyStatistics.Application.Services;

@@ -2,7 +2,7 @@
 using DailyStatistics.Application.Services.Interfaces;
 using DailyStatistics.DTO.Auth;
 using DailyStatistics.Persistence;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using DailyStatistics.Persistence.Repositories;
 using DailyStatistics.Persistence.Repositories.EF;
 using Microsoft.AspNetCore.Identity;

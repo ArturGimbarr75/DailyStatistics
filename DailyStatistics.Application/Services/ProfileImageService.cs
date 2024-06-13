@@ -3,7 +3,7 @@ using DailyStatistics.Application.Infrastructure;
 using DailyStatistics.Application.Services.Errors.ProfileImageService;
 using DailyStatistics.Application.Services.Interfaces;
 using DailyStatistics.DTO.Image;
-using DailyStatistics.Persistence.Models;
+using DailyStatistics.Model;
 using DailyStatistics.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 

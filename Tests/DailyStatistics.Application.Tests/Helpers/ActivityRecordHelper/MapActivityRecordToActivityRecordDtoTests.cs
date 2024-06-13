@@ -1,4 +1,4 @@
-﻿using DailyStatistics.Persistence.Models;
+﻿using DailyStatistics.Model;
 using Helper = DailyStatistics.Application.Helpers.ActivityRecordHelper;
 
 namespace DailyStatistics.Application.Tests.Helpers.ActivityRecordHelper;
