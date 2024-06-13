@@ -2,6 +2,6 @@
 
 public sealed class FirstAndLastDayPair
 {
-	public DateOnly FirstDay { get; set; }
-	public DateOnly LastDay { get; set; }
+	public Date FirstDay { get; set; }
+	public Date LastDay { get; set; }
 }

@@ -118,14 +118,14 @@ public sealed class DayController : RepairControllerBase
 
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[HttpGet("get-ir-range")]
-	public async Task<ActionResult<FirstAndLastDayPair>> GetDaysInRange([FromBody] FirstAndLastDayPair pair)
+	public async Task<ActionResult<FirstAndLastDayPair>> GetDaysInRange([FromBody] FirstAndLastDayPair range)
 	{
 		string? userId = UserId;
 
 		if (userId is null)
 			return BadRequest("Invalid JWT");
 
-		var result = await _dayService.GetDaysAsync(pair.FirstDay, pair.LastDay, userId);
+		var result = await _dayService.GetDaysAsync(range, userId);
 
 		if (result)
 			return Ok(result.Value);

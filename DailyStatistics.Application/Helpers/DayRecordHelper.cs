@@ -10,7 +10,7 @@ internal static class DayRecordHelper
 		return new()
 		{
 			Id = dayDto.Id,
-			Date = dayDto.Date,
+			Date = MapDateToDateOnly(dayDto.Date),
 			Description = dayDto.Description,
 			UserId = userId
 		};
@@ -21,7 +21,7 @@ internal static class DayRecordHelper
 		return new()
 		{
 			Id = dayRecord.Id,
-			Date = dayRecord.Date,
+			Date = MapDateOnlyToDate(dayRecord.Date),
 			Description = dayRecord.Description
 		};
 	}
@@ -30,7 +30,7 @@ internal static class DayRecordHelper
 	{
 		return new()
 		{
-			Date = dayCreate.Date,
+			Date = MapDateToDateOnly(dayCreate.Date),
 			Description = dayCreate.Description,
 			UserId = userId
 		};
@@ -40,8 +40,23 @@ internal static class DayRecordHelper
 	{
 		return new()
 		{
-			FirstDay = tuple.first,
-			LastDay = tuple.last
+			FirstDay = MapDateOnlyToDate(tuple.first),
+			LastDay = MapDateOnlyToDate(tuple.last)
+		};
+	}
+
+	public static DateOnly MapDateToDateOnly(Date date)
+	{
+		return new(date.Year, date.Month, date.Day);
+	}
+
+	public static Date MapDateOnlyToDate(DateOnly dateOnly)
+	{
+		return new()
+		{
+			Year = dateOnly.Year,
+			Month = dateOnly.Month,
+			Day = dateOnly.Day
 		};
 	}
 }
