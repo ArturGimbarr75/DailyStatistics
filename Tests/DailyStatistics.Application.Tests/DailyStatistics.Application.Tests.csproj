@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DailyStatistics.Application\DailyStatistics.Application.csproj" />
+    <ProjectReference Include="..\..\DailyStatistics.DTO\DailyStatistics.DTO.csproj" />
     <ProjectReference Include="..\..\DailyStatistics.Persistence\DailyStatistics.Persistence.csproj" />
   </ItemGroup>
 
