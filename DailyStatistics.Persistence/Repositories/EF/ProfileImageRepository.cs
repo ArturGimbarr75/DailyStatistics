@@ -47,7 +47,8 @@ public class ProfileImageRepository : IProfileImageRepository
 
 	public async Task<ProfileImage?> GetProfileImageByUserIdAsync(string userId)
 	{
-		return await _context.ProfileImages.FirstOrDefaultAsync(t => t.UserId == userId);
+		Guid? id = (await _context.Users.FindAsync(userId))?.SelectedProfileImageId;
+		return id is null ? null : await _context.ProfileImages.FirstAsync(t => t.Id == id);
 	}
 
 	public async Task<IEnumerable<ProfileImage>> GetProfileImagesByUserIdAsync(string userId)
